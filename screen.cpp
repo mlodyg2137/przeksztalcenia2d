@@ -7,7 +7,7 @@
 Screen::Screen(QWidget *parent)
     : QWidget{parent}
 {
-    canvas = QImage(800, 600, QImage::Format_RGB32);
+    canvas = QImage(width, height, QImage::Format_RGB32);
     canvas.fill(Qt::white);
 
     image = QImage(":/img/pudzian.png");
@@ -91,21 +91,21 @@ Color Screen::bilinearInterpolation(float fx, float fy)
 
 
 // setters
-void Screen::setTranslationX(int value) {   translation_x = (width/2.0f)*(value/100.0f);    }
-void Screen::setTranslationY(int value) {   translation_y = (height/2.0f)*(value/100.0f);   }
+void Screen::setTranslationX(int value) {   translation_x = 0.5f*(width-image_width)*(value/100.0f);    }
+void Screen::setTranslationY(int value) {   translation_y = 0.5f*(height-image_width)*(value/100.0f);   }
 void Screen::setRotation(int value)     {   rotation = (value/100.0f)*2*M_PI;               }
 void Screen::setScalingX(int value)     {   scaling_x = (value+100)/100.0f;                 }
 void Screen::setScalingY(int value)     {   scaling_y = (value+100)/100.0f;                 }
-void Screen::setShearingX(int value)    {   shearing_x = (value+50)/100.0f;                 }
-void Screen::setShearingY(int value)    {   shearing_y = (value+50)/100.0f;                 }
+void Screen::setShearingX(int value)    {   shearing_x = -(value)/100.0f;                 }
+void Screen::setShearingY(int value)    {   shearing_y = -(value)/100.0f;                 }
 
 
 void Screen::updateImage() {
 
     if (image.isNull()) return;
 
-    float cx = width/2.0f; // center of screen on x
-    float cy = height/2.0f; // center of screen on y
+    float cx = image.width()/2.0f; // center of screen on x
+    float cy = image.height()/2.0f; // center of screen on y
 
     qDebug() << "translation: x=" << translation_x << " y=" << translation_y;
     qDebug() << "rotation: alpha=" << rotation;

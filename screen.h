@@ -10,7 +10,7 @@ class Screen : public QWidget
 public:
     explicit Screen(QWidget *parent = nullptr);
     QImage canvas, image;
-    int width = 800;
+    int width = 900;
     int height = 600;
     int image_width = 400;
     int image_height = 300;
